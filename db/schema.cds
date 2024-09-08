@@ -6,7 +6,6 @@ using {
 //User
 } from '@sap/cds/common';
 
-
 define type Name : String(20);
 
 // define type Name1 : String(20);

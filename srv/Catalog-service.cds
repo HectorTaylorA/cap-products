@@ -19,8 +19,7 @@ service CatalogService {
 
 
 };
-
-
+ 
 define service CatalogService2 {
     entity Products2 as
         select from logali.Products {
