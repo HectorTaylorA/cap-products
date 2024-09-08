@@ -43,8 +43,6 @@ define service CatalogService2 {
             ToSaleData,
             Supplier,
             ToReview,
-
-
         };
 
 }
