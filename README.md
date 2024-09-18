@@ -23,3 +23,6 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
+
+## SWAGGER /$api-docs/
+## https://port4004-workspaces-ws-4tcmz.us10.trial.applicationstudio.cloud.sap/$api-docs/odata/v4/catalog/

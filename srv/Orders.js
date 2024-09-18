@@ -5,6 +5,12 @@ const { Orders } = cds.entities("com.training");
 module.exports = (srv) => {
 
     //***********        CDL                *************//
+
+    srv.before("*", (req) => {
+        console.log(`Method: ${req.method}`);
+        console.log(`Target: ${req.target}`);
+    });
+
     //*********** Operación de lectura Read **************//
     srv.on("READ", "Orders", async (req) => {
 
@@ -110,5 +116,53 @@ module.exports = (srv) => {
         });
         console.log("Before End", returnData);
         return await returnData;
+    });
+
+    //*********** Function  **************//
+    srv.on("getClientTaxRate", async (req) => {
+        // No Server Side Effect 
+        const { ClientEmail } = req.data;
+        const db = srv.transaction(req);
+
+        const results = await db.read(Orders, ["Country_code"]).where({ ClientEmail: ClientEmail });
+
+        console.log(results[0]);
+        switch (results[0].Country_code) {
+            case 'ES':
+                return 21.5;
+                break;
+            case 'UK':
+                return 24.6;
+                break;
+            default:
+                break;
+        }
+    });
+    //*********** Action  **************//
+    srv.on("cancelOrder", async (req) => {
+        const { ClientEmail } = req.data;
+        const db = srv.transaction(req);
+
+        const resultRead = await db.read(Orders, ["FirstName", "LastName", "Approved"]).where({ ClientEmail: ClientEmail });
+
+        let returnOrder = {
+            status: "",
+            message: ""
+        };
+
+        console.log(ClientEmail);
+        console.log(resultRead);
+
+        if (resultRead[0].Approved == false) {
+            const resultUpdate = await db.update(Orders).set({ Status: 'C' }).where({ ClientEmail: ClientEmail });
+            returnOrder.status = "Succeded";
+            returnOrder.message = `The Order placed by ${resultRead[0].FirstName} ${resultRead[0].LastName} was cancel`;
+        } else {
+            returnOrder.status = "Failed";
+            returnOrder.message = `The Order placed by ${resultRead[0].FirstName} ${resultRead[0].LastName} was Not cancel becouse was already approved`;
+        }
+        console.log("Action Cancel Order Executed");
+        return returnOrder;
+
     })
 };

@@ -30,3 +30,23 @@ Content-Type:  application/json
 
 ### Metodo Delete Order
 DELETE http://localhost:4004/odata/v4/manage-orders/Orders('client1@client1.com')
+
+### Get Customer Rate  Function
+### http://localhost:4004/odata/v4/manage-orders/getClientTaxRate(ClientEmail='client1@client1.com')
+
+### Get Customer Rate  Function in Bound
+GET http://localhost:4004/odata/v4/manage-orders/Orders(ClientEmail='client2@client2.com')/getClientTaxRate(ClientEmail='client1@client1.com')
+
+### Cancel Order - Action
+### http://localhost:4004/odata/v4/manage-orders/cancelOrder
+
+### Cancel Order - Action in Bound
+POST http://localhost:4004/odata/v4/manage-orders/Orders(ClientEmail='client1@client1.com')/cancelOrder
+Content-Type:  application/json
+
+{
+    "ClientEmail" : "client2@client2.com"
+}
+
+### Get Incidents servicio externo
+GET http://localhost:4004/odata/v4/sapbackend-exit/Incidents
