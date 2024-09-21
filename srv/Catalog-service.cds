@@ -49,7 +49,7 @@ define service CatalogService {
             Supplier,
             Review,
         //  Rating,
-        //  StockAvailability,
+        //  StockAvailability ,
         //  ToStockAvailability
         };
 
